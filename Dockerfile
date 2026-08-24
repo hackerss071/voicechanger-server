@@ -49,6 +49,11 @@ RUN set -e; \
     echo "----- warm.log tail -----"; tail -30 /tmp/warm.log; echo "-------------------------"; \
     test -f pretrain/rmvpe.pt && test -f pretrain/hubert_base.pt && test -f pretrain/content_vec_500.onnx
 
+# Bake the entrypoint Vast execs (a bare "entrypoint.sh" found via $PATH), placed LAST so the
+# big apt/pip/pretrain layers above keep identical hashes (cached on the host → fast re-pull).
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
 EXPOSE 8000
 
 # Auto-start on 0.0.0.0 (REQUIRED — else Vast's docker port-forward can't reach the server).
