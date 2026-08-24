@@ -11,7 +11,7 @@ FROM pytorch/pytorch:2.1.2-cuda12.1-cudnn8-runtime
 ENV DEBIAN_FRONTEND=noninteractive PIP_ROOT_USER_ACTION=ignore PIP_NO_CACHE_DIR=1
 
 RUN apt-get update -qq && apt-get install -y -qq --no-install-recommends \
-      git curl ca-certificates ffmpeg libportaudio2 && \
+      git curl ca-certificates ffmpeg libportaudio2 build-essential cmake && \
     rm -rf /var/lib/apt/lists/*
 
 WORKDIR /opt
